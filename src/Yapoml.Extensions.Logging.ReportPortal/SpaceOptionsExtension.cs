@@ -1,13 +1,17 @@
-﻿using Yapoml.Extensions.Logging.Serilog;
+﻿using Yapoml.Extensions.Logging.ReportPortal;
 using Yapoml.Framework.Options;
 
 namespace Yapoml
 {
     public static class SpaceOptionsExtension
     {
-        public static ISpaceOptions UseReportPortal(this ISpaceOptions spaceOptions)
+        public static ISpaceOptions WithReportPortal(this ISpaceOptions spaceOptions)
         {
-            spaceOptions.Services.Register<Framework.Logging.ILogger>(new ReportPortalAdapter());
+            var rpAdapter = new ReportPortalAdapter();
+
+            rpAdapter.Initialize(spaceOptions.Services.Get<Framework.Logging.ILogger>());
+
+            spaceOptions.Services.Register(rpAdapter);
 
             return spaceOptions;
         }

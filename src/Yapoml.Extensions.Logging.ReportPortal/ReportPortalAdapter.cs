@@ -1,10 +1,27 @@
-﻿namespace Yapoml.Extensions.Logging.Serilog
+﻿using System;
+using Yapoml.Framework.Logging;
+
+namespace Yapoml.Extensions.Logging.ReportPortal
 {
-    public class ReportPortalAdapter : Framework.Logging.ILogger
+    public class ReportPortalAdapter : Framework.Logging.Listeners.ILogListener, IDisposable
     {
-        public void Trace(string message)
+        private ILogger _yapomlLogger;
+
+        public void Initialize(ILogger logger)
         {
-            ReportPortal.Shared.Context.Current.Log.Trace(message);
+            _yapomlLogger = logger;
+
+            _yapomlLogger.OnLogMessage += Logger_OnLogMessage;
+        }
+
+        private void Logger_OnLogMessage(object sender, LogMessageEventArgs e)
+        {
+            global::ReportPortal.Shared.Context.Current.Log.Trace(e.Message);
+        }
+
+        public void Dispose()
+        {
+            _yapomlLogger.OnLogMessage -= Logger_OnLogMessage;
         }
     }
 }
