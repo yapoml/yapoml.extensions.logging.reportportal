@@ -1,7 +1,7 @@
 ﻿using Yapoml.Extensions.Logging.ReportPortal;
 using Yapoml.Framework.Options;
 
-namespace Yapoml
+namespace Yapoml.Extensions
 {
     public static class SpaceOptionsExtension
     {
