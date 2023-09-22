@@ -7,9 +7,9 @@ namespace Yapoml.Extensions
     {
         public static ISpaceOptions WithReportPortal(this ISpaceOptions spaceOptions)
         {
-            var rpAdapter = new ReportPortalAdapter();
+            var logger = spaceOptions.Services.Get<Framework.Logging.ILogger>();
 
-            rpAdapter.Initialize(spaceOptions.Services.Get<Framework.Logging.ILogger>());
+            var rpAdapter = new ReportPortalAdapter(logger);
 
             spaceOptions.Services.Register(rpAdapter);
 
