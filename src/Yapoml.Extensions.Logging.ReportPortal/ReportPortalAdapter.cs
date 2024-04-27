@@ -44,6 +44,11 @@ namespace Yapoml.Extensions.Logging.ReportPortal
         {
             var logScope = _logScopes[e.LogScope];
 
+            if (e.LogScope.Error != null)
+            {
+                logScope.Status = global::ReportPortal.Shared.Execution.Logging.LogScopeStatus.Failed;
+            }
+
             logScope.Dispose();
         }
 
